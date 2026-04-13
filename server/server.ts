@@ -9,7 +9,9 @@ const db = new pg.Pool({
   connectionString: "psql://postgres:postgres@localhost",
 });
 app.get("/api/grunnskole", async (c) => {
-  const result = await db.query("select * from spatial_ref_sys");
+  const result = await db.query(
+    "select * from grunnskoler_ab90da242c084b34aaa0acfbbd6fada6.grunnskole",
+  );
   return c.json(result.rows);
 });
 // `serveStatic` makes Hono serve the output from `vite build`
