@@ -10,9 +10,16 @@ const db = new pg.Pool({
 });
 app.get("/api/grunnskole", async (c) => {
   const result = await db.query(
-    "select * from grunnskoler_ab90da242c084b34aaa0acfbbd6fada6.grunnskole",
+    "select skolenavn, organisasjonsnummer, antallelever, st_transform(posisjon, 4326)::json geometry from grunnskoler_ab90da242c084b34aaa0acfbbd6fada6.grunnskole",
   );
-  return c.json(result.rows);
+  return c.json({
+    type: "FeatureCollection",
+    features: result.rows.map(({ geometry, ...properties }) => ({
+      type: "Feature",
+      geometry,
+      properties,
+    })),
+  });
 });
 // `serveStatic` makes Hono serve the output from `vite build`
 app.get("*", serveStatic({ root: "../dist" }));

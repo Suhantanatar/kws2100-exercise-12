@@ -29,7 +29,7 @@ const map = new Map({
     new TileLayer({ source: new OSM() }),
     new VectorLayer({
       source: new VectorSource({
-        url: "/api/grunnskoler",
+        url: "/api/grunnskole",
         format: new GeoJSON(),
       }),
     }),
